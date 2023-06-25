@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Department;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CityRepository::class)]
 class City
@@ -28,7 +29,7 @@ class City
     private Collection $company;
 
     #[ORM\ManyToOne(inversedBy: 'cities')]
-    private ?Region $region = null;
+    private ?Department $department = null;
 
     public function __construct()
     {
@@ -116,14 +117,14 @@ class City
         return $this;
     }
 
-    public function getRegion(): ?Region
+    public function getDepartment(): ?Department
     {
-        return $this->region;
+        return $this->department;
     }
 
-    public function setRegion(?Region $region): static
+    public function setDepartment(?Department $department): static
     {
-        $this->region = $region;
+        $this->department = $department;
 
         return $this;
     }

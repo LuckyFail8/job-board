@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\RegionRepository;
+use App\Repository\DepartmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RegionRepository::class)]
-class Region
+#[ORM\Entity(repositoryClass: DepartmentRepository::class)]
+class Department
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,7 +21,7 @@ class Region
     #[ORM\Column]
     private ?int $department_code = null;
 
-    #[ORM\OneToMany(mappedBy: 'region', targetEntity: City::class)]
+    #[ORM\OneToMany(mappedBy: 'department', targetEntity: City::class)]
     private Collection $cities;
 
     public function __construct()
@@ -70,7 +70,7 @@ class Region
     {
         if (!$this->cities->contains($city)) {
             $this->cities->add($city);
-            $city->setRegion($this);
+            $city->setDepartment($this);
         }
 
         return $this;
@@ -80,8 +80,8 @@ class Region
     {
         if ($this->cities->removeElement($city)) {
             // set the owning side to null (unless already changed)
-            if ($city->getRegion() === $this) {
-                $city->setRegion(null);
+            if ($city->getDepartment() === $this) {
+                $city->setDepartment(null);
             }
         }
 
