@@ -19,6 +19,7 @@ class DepartmentController extends AbstractController
         $entityManager = $doctrine->getManager();
 
         $departments = $entityManager->getRepository(Department::class)->findAll();
+        dump($departments);
 
         return $this->render('department/index.html.twig', [
             'controller_name' => 'DepartmentController',

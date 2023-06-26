@@ -34,6 +34,9 @@
 				</code>
 			</li>
 		</ul>
-
+		{% for department in departments %}
+			<h2>{{department.name }}
+				({{ department.departmentCode}})</h2>
+		{% endfor %}
 	</div>
 {% endblock %}
