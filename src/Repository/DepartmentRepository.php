@@ -39,6 +39,16 @@ class DepartmentRepository extends ServiceEntityRepository
         }
     }
 
+    public function findDepartmentIdByDepartmentCode($departmentCode): Department
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.id')
+            ->where('d.departmentCode = :departmentCode')
+            ->setParameter('departmentCode', $departmentCode)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Department[] Returns an array of Department objects
     //     */
