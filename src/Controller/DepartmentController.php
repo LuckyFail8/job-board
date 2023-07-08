@@ -28,7 +28,7 @@ class DepartmentController extends AbstractController
     }
 
     #[Route('/loaddepartment', name: 'app_loaddepartment')]
-    public function loadDepartmentInDatabase(KernelInterface $kernel, ManagerRegistry $doctrine)
+    public function loadDepartmentInDatabase(KernelInterface $kernel, ManagerRegistry $doctrine): Response
     {
         $projectDir = $kernel->getProjectDir();
         $departmentJsonPath = $projectDir . '/data/departements-region.json';
