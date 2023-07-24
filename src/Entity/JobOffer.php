@@ -49,13 +49,18 @@ class JobOffer
     #[ORM\ManyToOne(inversedBy: 'jobOffers')]
     private ?Company $company = null;
 
-    #[ORM\ManyToMany(targetEntity: City::class, inversedBy: 'jobOffers')]
-    private Collection $city;
+    #[ORM\Column(length: 255)]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $department = null;
+
+    #[ORM\Column]
+    private ?bool $on_board = null;
 
     public function __construct()
     {
         $this->technologie = new ArrayCollection();
-        $this->city = new ArrayCollection();
     }
 
 
@@ -209,26 +214,38 @@ class JobOffer
         return $this;
     }
 
-    /**
-     * @return Collection<int, City>
-     */
-    public function getCity(): Collection
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    public function addCity(City $city): static
+    public function setCity(string $city): static
     {
-        if (!$this->city->contains($city)) {
-            $this->city->add($city);
-        }
+        $this->city = $city;
 
         return $this;
     }
 
-    public function removeCity(City $city): static
+    public function getDepartment(): ?string
     {
-        $this->city->removeElement($city);
+        return $this->department;
+    }
+
+    public function setDepartment(?string $department): static
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    public function isOnBoard(): ?bool
+    {
+        return $this->on_board;
+    }
+
+    public function setOnBoard(bool $on_board): static
+    {
+        $this->on_board = $on_board;
 
         return $this;
     }

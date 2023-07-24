@@ -21,13 +21,9 @@ class Company
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: JobOffer::class)]
     private Collection $jobOffers;
 
-    #[ORM\ManyToMany(targetEntity: City::class, mappedBy: 'company')]
-    private Collection $cities;
-
     public function __construct()
     {
         $this->jobOffers = new ArrayCollection();
-        $this->cities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,33 +68,6 @@ class Company
             if ($jobOffer->getCompany() === $this) {
                 $jobOffer->setCompany(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, City>
-     */
-    public function getCities(): Collection
-    {
-        return $this->cities;
-    }
-
-    public function addCity(City $city): static
-    {
-        if (!$this->cities->contains($city)) {
-            $this->cities->add($city);
-            $city->addCompany($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCity(City $city): static
-    {
-        if ($this->cities->removeElement($city)) {
-            $city->removeCompany($this);
         }
 
         return $this;
