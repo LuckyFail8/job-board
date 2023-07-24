@@ -4,7 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Platform;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * @extends ServiceEntityRepository<Platform>
@@ -39,28 +42,44 @@ class PlatformRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Platform[] Returns an array of Platform objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     *  This function check if the platform being entered does not already exist 
+     * @param string $platformName 
+     * @return null|Platform 
+     */
+    public function findByUpperName(string $platformName): ?Platform
+    {
+        $uppercasedPlatformName = strtoupper($platformName);
 
-//    public function findOneBySomeField($value): ?Platform
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $this->createQueryBuilder('c')
+            ->andWhere('UPPER(c.name) = :uppercasedPlatformName')
+            ->setParameter('uppercasedPlatformName', $uppercasedPlatformName)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    //    /**
+    //     * @return Platform[] Returns an array of Platform objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('p.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Platform
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
